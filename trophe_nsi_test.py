@@ -26,10 +26,13 @@ button_leave = pygame.image.load("button_leave.png").convert_alpha()
 position_leave = button_leave.get_rect()
 position_leave.topleft = (20, 606)
 
+
+
 #mode, menu = 0
-mode = 0
+mode = [0]
+
 #detection clic de souris sur l'un des boutons + résultat d'un clic de souris sur un bouton
-def clic_bouton():
+def clic_bouton_menu():
     for event in pygame.event.get() :
         if event.type == MOUSEBUTTONUP:
             if event.button == 1:
@@ -37,6 +40,7 @@ def clic_bouton():
                     print("play")
                 if position_perso.collidepoint(event.pos):
                     print("perso")
+                    mode[0] = 2
                 if position_help.collidepoint(event.pos):
                     print("aide")
                 if position_leave.collidepoint(event.pos):
@@ -55,13 +59,30 @@ def afficher_menu():
     fenetre.blit(button_help, position_help)
     fenetre.blit(button_leave, position_leave)
     pygame.display.flip()
+
+#afficher level
+def afficher_level():
+    fenetre.fill([0,150,0])
+    pygame.display.flip()
+    
+def clic_bouton_level():
+    for event in pygame.event.get() :
+        if event.type == pygame.QUIT:
+            pygame.display.quit()
+            sys.exit()
+        
     
 while True :
     
-    if mode == 0:
-        clic_bouton()
+    if mode[0] == 0:
+        clic_bouton_menu()
         afficher_menu()
         
+    if mode[0] == 2:
+        afficher_level()
+        clic_bouton_level()
+        
 
+    
     
     
