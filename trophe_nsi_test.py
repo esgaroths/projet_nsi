@@ -121,15 +121,18 @@ def clic_bouton_level():
 
 
 #MATH
-            
+ 
+button_trinome = pygame.draw.rect(fenetre, (0, 100, 255), (20, 24, 275, 135))
+text_trinome = little_impact.render('Trinome du second degres', True, (0,0,0))
+
 def afficher_MATH():
     fenetre.fill([250,250,250])
     
     button_back = pygame.draw.rect(fenetre, (0, 100, 255), (1230, 24, 250, 135))
     fenetre.blit(text_back, (1276, 55))
     
-    
-    
+    button_trinome = pygame.draw.rect(fenetre, (0, 100, 255), (20, 24, 275, 135))
+    fenetre.blit(text_trinome, (25, 75))
     pygame.display.flip()
     
 def clic_bouton_math():
@@ -156,4 +159,6 @@ while True :
         
     if mode[0] == "math":
         afficher_MATH()
-        clic_bouton_math()
+        clic_bouton_math()       
+
+    
