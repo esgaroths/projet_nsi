@@ -13,7 +13,7 @@ mode = [0]
 
 level = ['rien']
 
-texte_niveau = "aucun niveau n'est sélectionner"
+texte_niveau = "aucun niveau n'est sélectionné"
 
 #création fenetre
 pygame.display.set_caption("Test_Jeux")
@@ -90,7 +90,7 @@ button_back = pygame.draw.rect(fenetre, (0, 100, 255), (1230, 24, 250, 135))
 text_back = impact.render('Retour', True, (0,0,0))
 
 button_math = pygame.draw.rect(fenetre, (0, 100, 255), (20, 24, 250, 135))
-text_math = little_impact.render('Mathémathique', True, (0,0,0))
+text_math = little_impact.render('Mathémathiques', True, (0,0,0))
 
 
 def afficher_level():
