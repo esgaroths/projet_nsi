@@ -31,16 +31,16 @@ for x in range(60):
 
 x_barre = [700]
 y_barre = [900]
-x_balle = [750]
-y_balle = [890]
+x_balle = [750, 750]
+y_balle = [870]
 pas_deplacement = 7 
-dx = [4]
-dy = [4]
+dx = [3]
+dy = [3]
 def le_jeu_lvl1():
     fenetre.fill([250, 250, 250])
     pygame.draw.rect(fenetre, (0, 0, 0), (249, 0, 1, 1000))
     pygame.draw.rect(fenetre, (0, 0, 0), (1215, 0, 1, 1000))
-    pygame.draw.circle(fenetre,(100, 250, 100),(x_balle[0],y_balle[0]),10)
+    pygame.draw.circle(fenetre,(100, 250, 100),(x_balle[0],y_balle[0]),15)
     for brique in liste_brique:
         brique.apparition()
         
@@ -65,13 +65,63 @@ def le_jeu_lvl1():
         dy[0] = -dy[0]
         
     for brique in liste_brique:
-        if brique.rectangle.collidepoint(x_balle[0], y_balle[0]):
+        if brique.rectangle.collidepoint(x_balle[0] + 10, y_balle[0]):
             dx[0] = -dx[0]
             dy[0] = -dy[0]
-    if barre_joueur.collidepoint(x_balle[0], y_balle[0]):
-        dx[0] = -dx[0]
-        dy[0] = -dy[0]
+            liste_brique.remove(brique)
+        elif brique.rectangle.collidepoint(x_balle[0] - 10, y_balle[0]):
+            dx[0] = -dx[0]
+            dy[0] = -dy[0]
+            liste_brique.remove(brique)
+        elif brique.rectangle.collidepoint(x_balle[0], y_balle[0] + 10):
+            dx[0] = -dx[0]
+            dy[0] = -dy[0]
+            liste_brique.remove(brique)
+        elif brique.rectangle.collidepoint(x_balle[0], y_balle[0] - 10):
+            dx[0] = -dx[0]
+            dy[0] = -dy[0]
+            liste_brique.remove(brique)
+            
+    if barre_joueur.collidepoint(x_balle[0] + 10, y_balle[0]):
+        if x_balle[0] <= x_barre[0] + 15 and x_balle[0] > x_balle[1]:
+            dy[0] = -dy[0]
+            dx[0] = -dx[0]
+        elif x_balle[0] >= x_barre[0] + 85 and x_balle[0] < x_balle[1]:
+            dy[0] = -dy[0]
+            dx[0] = -dx[0]
+        else:
+            dy[0] = -dy[0]
+            
+    elif barre_joueur.collidepoint(x_balle[0] - 10, y_balle[0]):
+        if x_balle[0] <= x_barre[0] + 15 and x_balle[0] > x_balle[1]:
+            dy[0] = -dy[0]
+            dx[0] = -dx[0]
+        elif x_balle[0] >= x_barre[0] + 85 and x_balle[0] < x_balle[1]:
+            dy[0] = -dy[0]
+            dx[0] = -dx[0]
+        else:
+            dy[0] = -dy[0]
+    elif barre_joueur.collidepoint(x_balle[0], y_balle[0] + 10):
+        if x_balle[0] <= x_barre[0] + 15 and x_balle[0] > x_balle[1]:
+            dy[0] = -dy[0]
+            dx[0] = -dx[0]
+        elif x_balle[0] >= x_barre[0] + 85 and x_balle[0] < x_balle[1]:
+            dy[0] = -dy[0]
+            dx[0] = -dx[0]
+        else:
+            dy[0] = -dy[0]      
+    elif barre_joueur.collidepoint(x_balle[0], y_balle[0] - 10):
+        if x_balle[0] <= x_barre[0] + 15 and x_balle[0] > x_balle[1]:
+            dy[0] = -dy[0]
+            dx[0] = -dx[0]
+        elif x_balle[0] >= x_barre[0] + 85 and x_balle[0] < x_balle[1]:
+            dy[0] = -dy[0]
+            dx[0] = -dx[0]
+        else:
+            dy[0] = -dy[0]
         
+        
+    x_balle[1] = x_balle[0]
     x_balle[0] += dx[0]
     y_balle[0] -= dy[0]
         
@@ -79,7 +129,4 @@ def le_jeu_lvl1():
 
 while True :              
     le_jeu_lvl1()
-    
-   
-     
     
