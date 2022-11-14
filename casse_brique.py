@@ -153,6 +153,8 @@ def le_jeu_lvl1():
         pygame.draw.circle(fenetre,(100, 250, 100),(x_balle[0],y_balle[0]),15)
         pygame.display.flip()
         vie[0] -= 1
+        dx[0] = 3
+        dy[0] = 3
         time.sleep(0.5)
         
     if vie[0] == 0:
