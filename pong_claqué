@@ -1,0 +1,138 @@
+import pygame, sys
+from pygame.locals import *
+import time
+from random import *
+
+pygame.init()
+pygame.key.set_repeat(10)
+
+impact = pygame.font.SysFont('Impact', 60)
+
+pygame.display.set_caption("Test_Jeux")
+fenetre = pygame.display.set_mode((1500, 1000))
+position_fenetre = fenetre.get_rect()
+
+mode = [1]
+
+pas_deplacement = 7
+
+x_barre1 = [50]
+y_barre1 = [440]
+
+x_barre2 = [1420]
+y_barre2 = [440]
+
+x_balle = [750, 750]
+y_balle = [500, 500]
+
+dx = [3]
+dy = [3]
+
+gagnant = ['']
+score_joueur = [0, 0]
+
+dodo = ['nop']
+def le_jeu():
+    fenetre.fill([0, 0, 0])
+    
+    barre_joueur1 = pygame.draw.rect(fenetre, (250, 250, 250), (x_barre1[0], y_barre1[0], 30, 120))
+    barre_joueur2 = pygame.draw.rect(fenetre, (250, 250, 250), (x_barre2[0], y_barre2[0], 30, 120))
+    pygame.draw.circle(fenetre,(250, 250, 250),(x_balle[0],y_balle[0]),15)
+    text_score_j1 = impact.render(str(score_joueur[0]), True, (250,250,250))
+    fenetre.blit(text_score_j1, (700, 20))
+    text_score_j2 = impact.render(str(score_joueur[1]), True, (250,250,250))
+    fenetre.blit(text_score_j2, (777, 20))
+    for y in range(50):
+         pygame.draw.rect(fenetre, (250, 250, 250), (740, y * 5 + 20 * (y-1)  , 20, 20))
+         
+        
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.display.quit()
+            sys.exit()
+            
+        if event.type == KEYDOWN:
+            if pygame.key.get_pressed()[pygame.K_s ]:
+                if y_barre1[0] < 880:
+                    y_barre1[0] += pas_deplacement
+                           
+            if pygame.key.get_pressed()[pygame.K_z]:
+                if y_barre1[0] > 0:
+                    y_barre1[0] -= pas_deplacement
+                
+            if pygame.key.get_pressed()[pygame.K_DOWN]:
+                if y_barre2[0] < 880:
+                    y_barre2[0] += pas_deplacement
+                           
+            if pygame.key.get_pressed()[pygame.K_UP]:
+                if y_barre2[0] > 0:
+                    y_barre2[0] -= pas_deplacement
+                    
+    if dodo[0] == 'ui':
+        pygame.draw.circle(fenetre,(250, 100, 100),(x_balle[0],y_balle[0]),15)
+        pygame.display.flip()
+        time.sleep(0.5)
+        
+    dodo[0] = 'nop'
+    
+    if x_balle[0] >= 1500:
+        dx[0] = -dx[0]
+        score_joueur[0] += 1
+        x_balle[0] = 750
+        y_balle[0] = 500
+        pygame.draw.circle(fenetre,(250, 250, 250),(x_balle[0],y_balle[0]),15)
+        dodo[0] = 'ui'
+        
+    if x_balle[0] <= 0:
+        dx[0] = -dx[0]
+        score_joueur[1] += 1
+        x_balle[0] = 750
+        y_balle[0] = 500
+        dodo[0] = 'ui'
+        
+        
+    if y_balle[0] <= 0 or y_balle[0] >= 1000:
+        dy[0] = -dy[0]
+    
+    
+    if barre_joueur1.collidepoint(x_balle[0] - 10, y_balle[0]):
+        dx[0] = -dx[0]
+    
+    if barre_joueur2.collidepoint(x_balle[0] - 10, y_balle[0]):
+        dx[0] = -dx[0]
+        
+    if score_joueur[0] == 10:
+        gagnant[0] = 'JOUEUR 1'
+        mode[0] = 2
+    
+    if score_joueur[1] == 10:
+        gagnant[0] = 'JOUEUR 2'
+        mode[0] = 2
+        
+            
+    x_balle[1] = x_balle[0]
+    y_balle[1] = y_balle[0]
+    x_balle[0] += dx[0]
+    y_balle[0] -= dy[0]
+    
+    pygame.display.flip()
+
+def fin_partie():
+    texte_gagnant = 'LA VICTOIRE APPARTIENT AU ' + gagnant[0] + ' AVEC UN SCORE DE ' + str(score_joueur[0]) + ' A ' + str(score_joueur[1])
+    fenetre.fill([0, 0, 0])
+    text = impact.render(texte_gagnant, True, (250,250,180))
+    fenetre.blit(text, (50, 450))
+    
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.display.quit()
+            sys.exit()
+            
+    pygame.display.flip()
+    
+while True:
+    if mode[0] == 1:
+        le_jeu()
+    
+    if mode[0] == 2:
+        fin_partie()
